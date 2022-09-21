@@ -130,7 +130,7 @@
 
     function toggleActive(e) {
       // this.classList.toggle('open-active'); <-- here, we don't use that because multiples event have been triggered (do console.log(e) to see), so we have to do something else
-      // console.log(e);
+      console.log(e);
 
       // it's flex-grow only that has been triggered but in some browsers it's only flex, so we use that
       if(e.propertyName.includes('flex')) {

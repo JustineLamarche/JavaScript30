@@ -3,10 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/javascript.js"></script>
 </head>
 <body>
+
+<style>
+  /*
+    misc styles, nothing to do with CSS variables
+  */
+
+  :root {
+      --base: aqua;
+      --spacing: 10px;
+      --blur: 10px;
+  }
+
+  img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+  }
+
+  .hl {
+      color: var(--base);
+  }
+
+  body {
+    text-align: center;
+    background: #193549;
+    color: white;
+    font-family: 'helvetica neue', sans-serif;
+    font-weight: 100;
+    font-size: 50px;
+  }
+
+  .controls {
+    margin-bottom: 50px;
+  }
+
+  input {
+    width: 100px;
+  }
+</style>
+
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
   <div class="controls">
@@ -21,6 +59,19 @@
   </div>
 
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+
+<script>
+  const inputs = document.querySelectorAll(".controls input");
+
+  function handleUpdate() {
+      const suffix = this.dataset.sizing || ''; // or nothing is important because #base doesn't have a data-sizing
+
+      // this.value renvoie la valeur qui a ete selectionnee quand on clique sur un des ranges ou sur la palette de couleurs
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix); 
+  }
+  inputs.forEach(input => input.addEventListener('change', handleUpdate));
+  inputs.forEach(input => input.addEventListener('mousemove', handleUpdate)); // important otherwise when we drag along the range, the value isnt taken
+</script>
 
 </body>
 </html>

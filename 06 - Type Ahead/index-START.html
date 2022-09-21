@@ -43,12 +43,12 @@ fetch(endpoint)
 
   function displayMatches() {
     const matchArray = findMatches(this.value, cities);
-    const html = matchArray.map(place =>  {
-    const regex = new RegExp(this.value, 'gi');
-    const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`); // replace the writing word for the regex so it becomes highlighted
-    const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
     
-
+    const html = matchArray.map(place =>  {
+      const regex = new RegExp(this.value, 'gi');
+      // replace the writing word for the regex so it becomes highlighted
+      const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+      const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);  
       return `
       <li>
         <span class="name">${cityName}, ${stateName}</span>
@@ -56,6 +56,7 @@ fetch(endpoint)
         </li>
         `
     }).join(''); // will return one big string
+    
     suggestions.innerHTML = html;
   }
 

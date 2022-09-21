@@ -32,6 +32,7 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    
     // with filter, we loop in the inventors and we decide if we keep it or not
     const fifteen = inventors.filter(function(inventor) {
       if(inventor.year >= 1500 && inventor.year < 1600) {
@@ -48,6 +49,7 @@
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    
     // map : takes in an array, does something with it, and return a new array but with the same lenght
 
     const fullNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`);
@@ -58,8 +60,12 @@
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+
+    // sort an array alphabetically
     // we get 2 items from it, person A and person B
     // returning 1 or -1 moves the elements in the array, they're "bubbling" up and down
+    // for comparing numbers, we have no choice to compare because it doesn't sort numbers (ex. "25" is bigger than "100", because "2" is bigger than "1".)
+    // https://www.w3schools.com/jsref/jsref_sort.asp
     const ordered = inventors.sort(function(a, b) {
       if(a.year > b.year) {
         return 1;
@@ -140,7 +146,7 @@
       return obj;
      }, {}) // second parameter is a blank object {} because we can't do car: 0, walk: 0, truck: 0, etc. because we don't know how many different objects we can have
 
-     console.log(transportation);
+    console.log(transportation);
 
   </script>
 </body>

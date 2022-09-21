@@ -3,11 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/javascript.js"></script>
 </head>
 <body>
 
+<style>
+  html {
+    font-size: 10px;
+    background: url('images/background.jpg') bottom center;
+    background-size: cover;
+  }
+
+  body,html {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+
+  .keys {
+    display: flex;
+    flex: 1;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .key {
+    border: .4rem solid black;
+    border-radius: .5rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+    padding: 1rem .5rem;
+    transition: all .07s ease;
+    width: 10rem;
+    text-align: center;
+    color: white;
+    background: rgba(0,0,0,0.4);
+    text-shadow: 0 0 .5rem black;
+  }
+
+  .playing {
+    transform: scale(1.1);
+    border-color: #ffc600;
+    box-shadow: 0 0 1rem #ffc600;
+  }
+
+  kbd {
+    display: block;
+    font-size: 4rem;
+  }
+
+  .sound {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    color: #ffc600;
+  }
+</style>
 
   <div class="keys">
     <div data-key="65" class="key">
@@ -45,7 +96,7 @@
     <div data-key="76" class="key">
       <kbd>L</kbd>
       <span class="sound">tink</span>
-    </div>
+    <!-- </div> -->
   </div>
 
   <audio data-key="65" src="sounds/clap.wav"></audio>
@@ -57,6 +108,30 @@
   <audio data-key="74" src="sounds/snare.wav"></audio>
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
+
+  <script>
+  function playSound(e) {
+    console.log(e.keyCode);
+      const audio = document.querySelector(`audio[data-key='${e.keyCode}']`);
+      const key = document.querySelector(`.key[data-key='${e.keyCode}']`);
+      if (!audio) return; // stop the function from running all together, otherwise 'null' is returned everytime
+
+      audio.currentTime = 0; // rewind to the start, otherwise if multiple clicks, the sound has to finish before starting again
+      audio.play();
+      key.classList.add('playing'); // jquery : key.addClass('playing')
+    }
+    
+    function removeTransition(e) {
+      if(e.propertyName !== 'transform') return; // skip if it's not a transform
+      
+      // once the transition is done, we want to reverse to the original state
+      e.target.classList.remove('playing'); // or this.classList.remove('playing');
+    }
+    
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition)); // can't use addEventListener alone because keys is an array and we need to loop
+    window.addEventListener('keydown', playSound);
+  </script>
 
 </body>
 </html>
